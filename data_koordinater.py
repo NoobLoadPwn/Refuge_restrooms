@@ -7,8 +7,6 @@ def findkoordinater(lokation):
     startlatitude=None
     endlatitude=None
 
-
-
     conn = http.client.HTTPConnection('api.positionstack.com')
 
     params = urllib.parse.urlencode({
@@ -29,7 +27,6 @@ def findkoordinater(lokation):
     latitude = decodeddatadict['data'][0]['latitude']
     longitude = decodeddatadict['data'][0]['longitude']
 
+    return latitude, longitude
 
-    return latitude, latitude
-
-print (findkoordinater('New York'))
+print (findkoordinater('Copenhagen'))
