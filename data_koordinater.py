@@ -28,5 +28,3 @@ def findkoordinater(lokation):
     longitude = decodeddatadict['data'][0]['longitude']
 
     return latitude, longitude
-
-print (findkoordinater('Copenhagen'))

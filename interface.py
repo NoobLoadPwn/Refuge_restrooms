@@ -1,4 +1,5 @@
 from tkinter import *
+from data_koordinater import findkoordinater
 
 window = Tk()
 window.title("Interface")
@@ -12,6 +13,13 @@ window.geometry('800x200')
 #dropdown = OptionMenu(window, variable, *opt)
 #dropdown.grid(column=0, row=1)
 
+
+def click():
+    coords = txt.get()
+    print("Finder toiletter for: "+ coords)
+    print(findkoordinater(coords))
+
+
 var1 = IntVar()
 Checkbutton(window, text="Unisex", variable=var1).grid(row=1, sticky=W)
 var2 = IntVar()
@@ -19,11 +27,6 @@ Checkbutton(window, text="ADA", variable=var2).grid(row=2, sticky=W)
 
 label = Label(window, text="Indtast adresse: ")
 label.grid(column=0, row=0)
-
-def click():
-    coords = txt.get()
-    if coords == "Vordingborg":
-        print("ZBC")
 
 
 btn = Button(window, text="Show Toilets", command=click)
