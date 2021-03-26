@@ -1,5 +1,8 @@
 import requests
 from data_koordinater import findkoordinater
+import http.client, urllib.parse
+from pprint import pprint
+import json
 
 test_number_of_toilets='10'
 test_ADA=False
@@ -35,7 +38,7 @@ def latitude(data_lokation):
     return latitude
 
 def longitude(data_lokation):
-    longitude='lon='
+    longitude='lng='
     longitude+=str(findkoordinater(data_lokation)[1])
     return longitude
 
@@ -46,6 +49,15 @@ def link_constructer(data_number_of_toilets, data_ADA, data_unisex, data_lokatio
             link+='&'+piecelink
     return link
 
-test_link=(link_constructer(test_number_of_toilets, test_ADA, test_unisex, test_lokation))
+test_link=link_constructer(test_number_of_toilets, test_ADA, test_unisex, test_lokation)
 
-print (requests.get(test_link))
+def data_constructer(link):
+    locallink=requests.get(link).text
+    res=locallink.getresponse()
+    data = res.read()
+    decodeddata = data.decode('utf-8')
+    decodeddatadict = json.loads(decodeddata)
+
+    return decodeddatadict['data']
+
+print (data_constructer(test_link))
