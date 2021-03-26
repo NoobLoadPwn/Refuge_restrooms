@@ -19,7 +19,6 @@ def findkoordinater(lokation):
 
     res = conn.getresponse()
     data = res.read()
-
     decodeddata = data.decode('utf-8')
 
     decodeddatadict = json.loads(decodeddata)
