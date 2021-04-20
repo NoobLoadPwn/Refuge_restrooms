@@ -7,7 +7,7 @@ import json
 test_number_of_toilets='10'
 test_ADA=False
 test_unisex=True
-test_lokation='Copenhagen'
+test_lokation='New York'
 
 def page():
 	return 'page=1'
@@ -53,7 +53,26 @@ test_link=link_constructer(test_number_of_toilets, test_ADA, test_unisex, test_l
 
 def data_constructer(link):
 	datalink=requests.get(link).text
-	decodeddatadict = json.loads(datalink)
-	return decodeddatadict[2]['street']
+	decodeddatadict = json.loads(datalink) #laver
+	addreses=[]
+	directions=[]
+	downvote=[]
+	upvote=[]
+	changing_table=[]
+	approved=[]
+	city=[]
+	state=[]
+	name=[]
+	for dict in decodeddatadict:#går igennem de forskellige dicts
+		addreses.append(dict['street']) #tager adressen og sætter den ind i adresses listen
+		directions.append(dict['directions'])
+		downvote.append(dict['downvote'])
+		upvote.append(dict['upvote'])
+		changing_table.append(dict['changing_table'])
+		approved.append(dict['approved'])
+		city.append(dict['city'])
+		state.append(dict['state'])
+		name.append(dict['name'])
+	return addreses, directions, downvote, upvote, changing_table, approved, city, state, name
 
-print (data_constructer(test_link))
+data=data_constructer(test_link)
