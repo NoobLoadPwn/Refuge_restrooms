@@ -4,26 +4,25 @@ import json
 
 
 def findkoordinater(lokation):
-    startlatitude=None
-    endlatitude=None
+	conn = http.client.HTTPConnection('api.positionstack.com')
 
-    conn = http.client.HTTPConnection('api.positionstack.com')
+	params = urllib.parse.urlencode({
+		'access_key': '954f1d2dd6ec71f9e71b8ba50194fa7d',
+		'query': lokation,
+		'limit': 1,
+		})
 
-    params = urllib.parse.urlencode({
-        'access_key': '954f1d2dd6ec71f9e71b8ba50194fa7d',
-        'query': lokation,
-        'limit': 1,
-        })
+	conn.request('GET', '/v1/forward?{}'.format(params))
 
-    conn.request('GET', '/v1/forward?{}'.format(params))
+	res = conn.getresponse()
 
-    res = conn.getresponse()
-    data = res.read()
-    decodeddata = data.decode('utf-8')
+	data = res.read()
 
-    decodeddatadict = json.loads(decodeddata)
+	decodeddata = data.decode('utf-8')
 
-    latitude = decodeddatadict['data'][0]['latitude']
-    longitude = decodeddatadict['data'][0]['longitude']
+	decodeddatadict = json.loads(decodeddata)
+	
+	latitude = decodeddatadict['data'][0]['latitude']
+	longitude = decodeddatadict['data'][0]['longitude']
 
-    return latitude, longitude
+	return latitude, longitude
