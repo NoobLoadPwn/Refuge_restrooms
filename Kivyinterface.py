@@ -1,30 +1,45 @@
-from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.widget import Widget
-from kivy.lang import Builder
-from kivy.properties import StringProperty
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.checkbox import CheckBox
+import kivy
 import requests
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.app import App
+from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
+from kivy.uix.widget import Widget
+from kivy.properties import ObjectProperty
+from kivy.uix.screenmanager import ScreenManager, Screen
+from data_koordinater import findkoordinater
+from data_toilet import link_constructer
 
-Builder.load_file('MyApp.kv')
+class MyGrid(Screen):
+    adresse = ObjectProperty(None)
+    antal = ObjectProperty(None)
 
-class MyGridLayout(GridLayout):
+    def toggleCheckBoxes(self):
+        self.ids.ADA.disabled = not self.ids.custom.active
+        self.ids.ADA.active = False
+        self.ids.Unisex.disabled = not self.ids.custom.active
+        self.ids.Unisex.active = False
 
-    def checkbox_click(self, instance, value):
-        if value is True:
-            self.label.text = "Checkbox Checked"
+    def checkBoxClick(self, instance,value,crit):
+        print(crit,value)
 
-        else:
-            self.label.text = "Checkbox Unchecked"
+    def btn(self):
+        try:
+            print("Finder toiletter for:", self.adresse.text)
+            print("Antal toilleter:", self.antal.text)
+            print(findkoordinater(self.adresse.text))
+        except:
+            print("Indtast en adresse")
 
-class CheckBoxEx(App):
+class Resultat(Screen):
+    pass
+
+class MyApp(App):
     def build(self):
-        return MyGridLayout()
+        self.sm = ScreenManager()
+        self.sm.add_widget(MyGrid(name = 'category'))
+        self.sm.add_widget(Resultat(name = 'Results'))
+        return self.sm
 
-if __name__ == "__main__":
-    CheckBoxEx().run()
+MyApp().run()
