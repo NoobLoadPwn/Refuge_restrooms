@@ -1,6 +1,6 @@
-
+#:import MapView kivy.garden.mapview.MapView
 <MyGrid>:
-
+	id: textinput
     adresse: adresse
     antal: antal
 
@@ -15,6 +15,7 @@
                 font_size:30
             TextInput:
                 id: adresse
+				text: "københavn"
                 multiline:False
 
             Label:
@@ -22,6 +23,7 @@
                 font_size:30
             TextInput:
                 id: antal
+				text: "5"
                 multiline:False
 
             Label:
@@ -42,19 +44,32 @@
 
         Button:
             text:"Submit"
+			size: 1650, 200
+			size_hint: None, None
             on_press:
                 root.btn()
                 app.sm.transition.direction = 'left'
                 app.sm.current = 'Results'
 
 <Resultat>:
+	id: resultatscreen
     BoxLayout:
         orientation: 'vertical'
-        Label:
-            id: adresser
-            text: ''
+		MapView:
+			id: map_coords
+			lat: 10
+			lon: 10
+			zoom: 13
+		Button:
+			text: "update"
+			size: 1650, 200
+			size_hint: None, None
+			on_press:
+				root.update()
         Button:
             text: 'Tilbage'
+			size: 1650, 200
+			size_hint: None, None
             on_press:
                 app.sm.transition.direction = 'right'
                 app.sm.current = 'category'

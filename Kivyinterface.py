@@ -5,41 +5,48 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
-from kivy.uix.widget import Widget
-from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.boxlayout import BoxLayout
+from kivy_garden.mapview import MapView, MapSource
 from data_koordinater import findkoordinater
-from data_toilet import link_constructer
+from data_toilet import link_constructer, data_constructer
 
 class MyGrid(Screen):
-    adresse = ObjectProperty(None)
-    antal = ObjectProperty(None)
 
-    def toggleCheckBoxes(self):
-        self.ids.ADA.disabled = not self.ids.custom.active
-        self.ids.ADA.active = False
-        self.ids.Unisex.disabled = not self.ids.custom.active
-        self.ids.Unisex.active = False
+	#normal = false, down = true
 
-    def checkBoxClick(self, instance,value,crit):
-        print(crit,value)
+	def checkBoxClick(self, instance,value,crit):
+		pass
 
-    def btn(self):
-        try:
-            print("Finder toiletter for:", self.adresse.text)
-            print("Antal toilleter:", self.antal.text)
-            print(findkoordinater(self.adresse.text))
-        except:
-            print("Indtast en adresse")
+	def btn(self):
+
+		ada = False
+		if self.ids.ADA.state == "down":
+			ada = True
+			print("ADA is true")
+
+		unisex = False
+		if self.ids.Unisex.state == "down":
+			unisex = True
+			print("Unisex is true")
+
+		#link = link_constructer(self.antal.text, ada, unisex,self.adresse.text)
+		#data = data_constructer(link)
+		#self.ids.ads.text = str(data[0])
 
 class Resultat(Screen):
-    pass
+	def update(self):
+		#print(self.parent.ids.resultatscreen.ids.map_coords.lat)
+		#print(self.parent.ids.resultatscreen.ids.map_coords.lon)
+		print((findkoordinater(self.parent.ids.textinput.ids.adresse.text)))
+		print((findkoordinater(self.parent.ids.textinput.ids.adresse.text)))
+
 
 class MyApp(App):
-    def build(self):
-        self.sm = ScreenManager()
-        self.sm.add_widget(MyGrid(name = 'category'))
-        self.sm.add_widget(Resultat(name = 'Results'))
-        return self.sm
+	def build(self):
+		self.sm = ScreenManager()
+		self.sm.add_widget(MyGrid(name = 'category'))
+		self.sm.add_widget(Resultat(name = 'Results'))
+		return self.sm
 
 MyApp().run()
