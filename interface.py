@@ -39,3 +39,9 @@ txt.grid(column=1, row=0)
 
 
 window.mainloop()
+	if len(decodeddatadict['data']) > 0 and isinstance(decodeddatadict['data'][0], dict):
+		latitude = decodeddatadict['data'][0]['latitude'] #tager latitude fra decodeddatadict
+		longitude = decodeddatadict['data'][0]['longitude'] #tager longitude fra decodeddatadict
+	else:
+		latitude, longitude = findkoordinater(lokation)
+	return latitude, longitude #returnere latitude og longitude

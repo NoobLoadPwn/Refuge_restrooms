@@ -34,12 +34,12 @@ def unisex(data_unisex):
 
 def latitude(data_lokation):
 	latitude='lat='
-	latitude+=str(findkoordinater(data_lokation)[0])#kalder findkordinater for  latitude, ud fra det input den modtager, og laver det om til string, for at det i linket
+	latitude+=str(findkoordinater(data_lokation,0)[0])#kalder findkordinater for  latitude, ud fra det input den modtager, og laver det om til string, for at det i linket
 	return latitude
 
 def longitude(data_lokation):
 	longitude='lng='
-	longitude+=str(findkoordinater(data_lokation)[1])#kalder findkordinater for  longitude, ud fra det input den modtager, og laver det om til string, for at det i linket
+	longitude+=str(findkoordinater(data_lokation,0)[1])#kalder findkordinater for  longitude, ud fra det input den modtager, og laver det om til string, for at det i linket
 	return longitude
 
 def link_constructer(data_number_of_toilets, data_ADA, data_unisex, data_lokation):

@@ -1,6 +1,5 @@
 #:import MapView kivy.garden.mapview.MapView
 <MyGrid>:
-	id: textinput
     adresse: adresse
     antal: antal
 
@@ -8,6 +7,7 @@
         cols:1
 
         GridLayout:
+			id: screen1input
             cols:2
 
             Label:
@@ -40,33 +40,33 @@
                 id:Unisex
                 on_state: root.checkBoxClick(self, self.active,"Unisex")
 
-
-
         Button:
             text:"Submit"
 			size: 1650, 200
 			size_hint: None, None
             on_press:
-                root.btn()
                 app.sm.transition.direction = 'left'
                 app.sm.current = 'Results'
 
 <Resultat>:
 	id: resultatscreen
+	on_pre_enter:
+		self.load_coords(app.sm.get_screen('category').ids.adresse.text)
+		self.load_markers(app.sm.get_screen('category').ids.antal.text, app.sm.get_screen('category').ids.adresse.text,app.sm.get_screen('category').ids.ADA.state, app.sm.get_screen('category').ids.Unisex.state)
+
+	on_pre_leave:
+		self.remove_markers(app.sm.get_screen('category').ids.antal.text)
+
     BoxLayout:
         orientation: 'vertical'
 		MapView:
 			id: map_coords
-			lat: 10
-			lon: 10
-			zoom: 13
-		Button:
-			text: "update"
-			size: 1650, 200
-			size_hint: None, None
-			on_press:
-				root.update()
+			lat: root.coords[0]
+			lon: root.coords[1]
+			zoom: 15
+
         Button:
+			id: bstate
             text: 'Tilbage'
 			size: 1650, 200
 			size_hint: None, None
