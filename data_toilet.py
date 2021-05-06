@@ -55,21 +55,9 @@ def data_constructer(link):
 	decodeddatadict = json.loads(datalink) #laver linkets
 	addreses=[]#opretter tomme lister
 	directions=[]
-	downvote=[]
-	upvote=[]
-	changing_table=[]
-	approved=[]
-	city=[]
-	state=[]
-	name=[]
+
 	for dict in decodeddatadict:#går igennem de forskellige dicts
 		addreses.append(dict['street']) #tager dataen fra dict og sætter den ind i dens tilgivne liste
 		directions.append(dict['directions'])
-		downvote.append(dict['downvote'])
-		upvote.append(dict['upvote'])
-		changing_table.append(dict['changing_table'])
-		approved.append(dict['approved'])
-		city.append(dict['city'])
-		state.append(dict['state'])
-		name.append(dict['name'])
-	return addreses, directions, downvote, upvote, changing_table, approved, city, state, name
+
+	return addreses, directions

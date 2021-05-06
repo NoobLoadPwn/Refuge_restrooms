@@ -1,5 +1,4 @@
 import http.client, urllib.parse
-from pprint import pprint
 import json
 
 
@@ -19,10 +18,6 @@ def findkoordinater(lokation, fails):
 		decodeddata = data.decode('utf-8') #sætter data til rigtig datatype altså string, for at programmet kan læse det.
 		decodeddatadict = json.loads(decodeddata) #bruger json til at lave string om til dictionaries, for at kunne plukke de rigtige dele af data.
 
-		#print(decodeddatadict)
-		#print(decodeddatadict['data'])
-		#print(decodeddatadict['data'][0]['longitude'])
-		#print(type(decodeddatadict))
 		if len(decodeddatadict['data']) > 0 and isinstance(decodeddatadict['data'][0], dict):
 			if len(decodeddatadict['data'][0]) > 0:
 				latitude = decodeddatadict['data'][0]['latitude'] #tager latitude fra decodeddatadict

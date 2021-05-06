@@ -1,5 +1,5 @@
 #:import MapView kivy.garden.mapview.MapView
-<MyGrid>:
+<homeScreen>:
     adresse: adresse
     antal: antal
 
@@ -30,32 +30,37 @@
                 text:"ADA"
                 font_size:30
             CheckBox:
-                id:ADA
-                on_state: root.checkBoxClick(self,self.active, "ADA")
+                id:Ada
+                on_state: root.checkBoxClick(self,self.active)
 
             Label:
                 text:"Unisex"
                 font_size:30
             CheckBox:
                 id:Unisex
-                on_state: root.checkBoxClick(self, self.active,"Unisex")
+                on_state: root.checkBoxClick(self, self.active)
 
         Button:
             text:"Submit"
 			size: 1650, 200
 			size_hint: None, None
-            on_press:
-                app.sm.transition.direction = 'left'
-                app.sm.current = 'Results'
+            on_release:
+                app.sm.current = "Results" if antal.text.isnumeric() == True else "category"
+                app.sm.transition.direction = "left"
+            #on_release:
+				#if antal.text == int(antal.text):
+				#app.sm.transition.direction = 'left'
+				#app.sm.current = 'Results'
 
 <Resultat>:
 	id: resultatscreen
 	on_pre_enter:
 		self.load_coords(app.sm.get_screen('category').ids.adresse.text)
-		self.load_markers(app.sm.get_screen('category').ids.antal.text, app.sm.get_screen('category').ids.adresse.text,app.sm.get_screen('category').ids.ADA.state, app.sm.get_screen('category').ids.Unisex.state)
+		self.criteria(app.sm.get_screen('category').ids.Ada.state, app.sm.get_screen('category').ids.Unisex.state)
+		self.load_markers(app.sm.get_screen('category').ids.antal.text, app.sm.get_screen('category').ids.adresse.text,)
 
 	on_pre_leave:
-		self.remove_markers(app.sm.get_screen('category').ids.antal.text)
+		self.remove_markers()
 
     BoxLayout:
         orientation: 'vertical'
@@ -63,7 +68,7 @@
 			id: map_coords
 			lat: root.coords[0]
 			lon: root.coords[1]
-			zoom: 15
+			zoom: 10
 
         Button:
 			id: bstate
