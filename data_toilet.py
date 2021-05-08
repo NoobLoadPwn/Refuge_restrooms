@@ -4,21 +4,16 @@ import http.client, urllib.parse
 from pprint import pprint
 import json
 
-test_number_of_toilets='10'
-test_ADA=False
-test_unisex=True
-test_lokation='New York'
-
 def page():
-	return 'page=1'
+	return 'page=1' #Returnere string "page=1"
 
 def number_of_toilets(data_number_of_toilets):
-	toiletamount='per_page='
+	toiletamount='per_page='#Laver variabel toiletamount og får string "per_page=1"
 	toiletamount+=data_number_of_toilets#tiljøer den tildelte data til inket, som skal være et tal
-	return toiletamount
+	return toiletamount#Returnerer toiletamount
 
 def offset():
-	return 'offset=0'
+	return 'offset=0'#Returnere string "offset=0"
 
 def ada_accesible(data_ADA):
 	if data_ADA==True:#hvis ada er sand bliver der skrevet en string med true, og hvis ikke bliver der skrevet false
@@ -35,12 +30,12 @@ def unisex(data_unisex):
 def latitude(data_lokation):
 	latitude='lat='
 	latitude+=str(findkoordinater(data_lokation,0)[0])#kalder findkordinater for  latitude, ud fra det input den modtager, og laver det om til string, for at det i linket
-	return latitude
+	return latitude#returnere latitude
 
 def longitude(data_lokation):
 	longitude='lng='
 	longitude+=str(findkoordinater(data_lokation,0)[1])#kalder findkordinater for  longitude, ud fra det input den modtager, og laver det om til string, for at det i linket
-	return longitude
+	return longitude#returnere longitude
 
 def link_constructer(data_number_of_toilets, data_ADA, data_unisex, data_lokation):
 	link='https://www.refugerestrooms.org/api/v1/restrooms/by_location?'#sætter basis delen af linket, der altid skal være det samme
@@ -48,7 +43,7 @@ def link_constructer(data_number_of_toilets, data_ADA, data_unisex, data_lokatio
 	for piecelink in [page(), number_of_toilets(data_number_of_toilets),offset(), ada_accesible(data_ADA), unisex(data_unisex), latitude(data_lokation), longitude(data_lokation)]:
 		if piecelink!='':#går igennem de forskellige dele af linket, hvis de ikke er blanke
 			link+='&'+piecelink #sætter de forskellige dele af linket ind i linket, med et & tegn imellem
-	return link
+	return link#Returnere link
 
 def data_constructer(link):
 	datalink=requests.get(link).text #finder linkets input
@@ -60,4 +55,4 @@ def data_constructer(link):
 		addreses.append(dict['street']) #tager dataen fra dict og sætter den ind i dens tilgivne liste
 		directions.append(dict['directions'])
 
-	return addreses, directions
+	return addreses, directions#returnere addreses og directions

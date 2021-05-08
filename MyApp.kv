@@ -23,7 +23,7 @@
                 font_size:30
             TextInput:
                 id: antal
-				text: "5"
+				text: "1"
                 multiline:False
 
             Label:
@@ -47,15 +47,11 @@
             on_release:
                 app.sm.current = "Results" if antal.text.isnumeric() == True else "category"
                 app.sm.transition.direction = "left"
-            #on_release:
-				#if antal.text == int(antal.text):
-				#app.sm.transition.direction = 'left'
-				#app.sm.current = 'Results'
 
 <Resultat>:
 	id: resultatscreen
 	on_pre_enter:
-		self.load_coords(app.sm.get_screen('category').ids.adresse.text)
+		self.load_map(app.sm.get_screen('category').ids.adresse.text)
 		self.criteria(app.sm.get_screen('category').ids.Ada.state, app.sm.get_screen('category').ids.Unisex.state)
 		self.load_markers(app.sm.get_screen('category').ids.antal.text, app.sm.get_screen('category').ids.adresse.text,)
 
@@ -64,11 +60,7 @@
 
     BoxLayout:
         orientation: 'vertical'
-		MapView:
-			id: map_coords
-			lat: root.coords[0]
-			lon: root.coords[1]
-			zoom: 10
+		id: map_view
 
         Button:
 			id: bstate
